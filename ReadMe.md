@@ -1,6 +1,6 @@
-##flask-utils
+## flask-utils
 
-flask-utils 是对Flask应用中常用的功能进行封装，方便使用，目前主要提供了三个类：
+**flask-utils 是对Flask应用中常用的功能进行封装，方便使用，目前主要提供了三个类：**
 
 * RoutingSQLAlchemy
 > 基于flask-sqlalchemy的封装，可实现Flask应用的读写分离，非常轻量且灵活，并且完全兼容 flask-sqlalchemy的使用方式
