@@ -10,3 +10,6 @@
 
 * Serializer
 > 参考Django的 serializer，实现简单的serializer，可以方便的进行由model 到json以及由json到model的转换
+
+* LoopCall
+> 定期执行某任务，可用于热加载之类的操作

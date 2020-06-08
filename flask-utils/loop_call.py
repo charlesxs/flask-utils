@@ -12,7 +12,7 @@ AsyncCall = None
 app = Flask()
 init_async_call()
 
-# 定期执行 task_worker_fn (每隔5秒钟)
+# 定期执行 task_worker_fn (每隔5秒钟)，可用于热加载之类的操作
 task1 = LoopCall(task_worker_fn, 5)
 task1.start(now=True)
 """
