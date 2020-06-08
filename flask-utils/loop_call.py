@@ -6,11 +6,11 @@ import time
 from threading import Thread
 
 log = logging.getLogger(__name__)
-AsyncCall = None
+TaskManger = None
 
 """
 app = Flask()
-init_async_call()
+init_task_manager()
 
 # 定期执行 task_worker_fn (每隔5秒钟)，可用于热加载之类的操作
 task1 = LoopCall(task_worker_fn, 5)
@@ -18,11 +18,11 @@ task1.start(now=True)
 """
 
 
-class _AsyncCall(Thread):
+class _TaskManger(Thread):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
+        super(_TaskManger, self).__init__(daemon=True)
         self.tasks = set()
-        super(_AsyncCall, self).__init__(*args, **kwargs)
 
     def register_task(self, task):
         if task not in self.tasks:
@@ -48,12 +48,14 @@ class _AsyncCall(Thread):
 
             time.sleep(1)
 
+    def clear_tasks(self):
+        self.tasks.clear()
 
-def init_async_call():
-    global AsyncCall
-    AsyncCall = _AsyncCall()
-    AsyncCall.daemon = True
-    AsyncCall.start()
+
+def init_task_manager():
+    global TaskManger
+    TaskManger = _TaskManger()
+    TaskManger.start()
 
 
 class LoopCall(object):
@@ -70,5 +72,5 @@ class LoopCall(object):
             self.fn(*self.args)
 
         self.exec_time = time.time()
-        AsyncCall.register_task(self)
+        TaskManger.register_task(self)
 
