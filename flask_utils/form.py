@@ -2,6 +2,8 @@
 #
 #
 
+import logging
+
 
 class Form(object):
     """
@@ -50,11 +52,12 @@ class Column(object):
     """
     def __init__(self, name, value, type_,
                  required=True, default=None,
-                 validator=None):
+                 validator=None, converter=None):
         self.name = name
         self.type_ = type_
         self.default = default
         self.required = required
+        self.converter = converter
 
         self.value = self.convert(value, type_)
         self.validators = set()
@@ -71,12 +74,24 @@ class Column(object):
         self.validators.remove(validator)
         return self
 
-    @staticmethod
-    def convert(value, type_):
+    def convert(self, value, type_):
+        """
+        转换器，转换失败返回 None
+        :param value:
+        :param type_:
+        :return:
+        """
         try:
+            if value is None:
+                return value
+
+            if self.converter:
+                return self.converter(value)
+
             return type_(value)
-        except ValueError:
-            return value
+        except Exception as e:
+            logging.warning('param <%s> convert error: %s', self.name, e)
+            return None
 
     def value_type_validator(self, val):
         if not isinstance(self.value, self.type_):
