@@ -38,7 +38,7 @@ class Form(object):
                 raise Exception('param <%s> validate error: %s' % (column.name, e))
 
     def to_json(self):
-        return {column.name: getattr(self, 'value', column.default)
+        return {column.name: getattr(self, column.name, column.default)
                 for column in self.columns}
 
     @property
