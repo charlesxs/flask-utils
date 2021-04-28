@@ -49,8 +49,10 @@ class Serializer(object):
         if self.data is None:
             raise ValueError('expect data is not None')
         model = self.model_class()
-        [setattr(model, column, self.data[column])
-         for column in self.columns if column not in self.exclude_columns]
+        for column in self.columns:
+            if column in self.exclude_columns or column not in self.data:
+                continue
+            setattr(model, column, self.data[column])
         return model
 
     class Meta:
