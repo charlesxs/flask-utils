@@ -5,7 +5,7 @@
 from flask_sqlalchemy.model import Model
 
 
-class Serializer(object):
+class Serializer:
     """
     Serializer类实现 由model 到json以及由json到model的转换
 
