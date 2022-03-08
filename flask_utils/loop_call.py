@@ -74,8 +74,8 @@ class TaskManger:
                     continue
 
                 try:
-                    t.fn(*t.args)
                     t.calc_next_time()
+                    t.fn(*t.args)
                 except Exception as e:
                     log.error('async call error, fn: %s, err: %s' %
                               (t.fn.__name__, e))
