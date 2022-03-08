@@ -26,5 +26,5 @@ setup(
     ],
     version='1.0',
     packages=find_packages(),
-    install_requires=['flask-sqlalchemy==2.4.1', 'sqlalchemy==1.3.10', 'psycopg2-binary==2.8.4']
+    install_requires=['flask-sqlalchemy==2.4.1', 'sqlalchemy==1.3.10']
 )
