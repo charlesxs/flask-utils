@@ -85,6 +85,9 @@ class Column(object):
             if value is None:
                 return value
 
+            if isinstance(value, type_):
+                return value
+
             if self.converter:
                 return self.converter(value)
 
