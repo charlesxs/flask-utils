@@ -59,12 +59,14 @@ class TaskManger:
         TaskManger.init_done = True
 
     def register_task(self, task):
-        if task not in self.tasks:
-            self.tasks.add(task)
+        with self.__lock:
+            if task not in self.tasks:
+                self.tasks.add(task)
 
     def remove_task(self, task):
-        if task in self.tasks:
-            self.tasks.remove(task)
+        with self.__lock:
+            if task in self.tasks:
+                self.tasks.remove(task)
 
     def run(self):
         while True:
